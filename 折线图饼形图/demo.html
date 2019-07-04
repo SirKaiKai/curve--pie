@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="css/style/style.css">
+    <script src="echarts.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <title>demo</title>
+</head>
+<style>
+    #show_charts{width:100%; height:200px;margin: 0 auto;}
+    #pie{width:100%;height:200px;}
+</style>
+<body>
+<div class="pay_percentage">
+    <!--折线图-->
+    <div id="show_charts"></div>
+</div>
+</div>
+<div class="pay_percentage pie_box">
+    <!--饼图-->
+    <div id="pie" style=""></div>
+</div>
+</div>
+
+<!--折线图-->
+<script type="text/javascript">
+    var dom = document.getElementById("show_charts");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        title: {
+            text: '交易趋势',
+        },
+        tooltip: {
+            trigger: 'axis',
+            show: false,
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            selectedMode: false,
+            data: ['交易趋势'],
+            textStyle: {
+                fontSize: 10
+            }
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                mark: {show: true},
+                dataView: {show: true, readOnly: false},
+            }
+        },
+        calculable: true,
+        xAxis: [
+            {
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: '#999',
+                        type: "shadow"
+                    }
+                },
+                axisLabel: {
+                    formatter: '{value}',
+                    textStyle: {
+                        fontSize: 8      //更改坐标轴文字大小
+                    }
+                },
+                type: 'category',
+                boundaryGap: false,
+                data: ["2018-06-07", "2018-06-08", "2018-06-09", "2018-06-10", "2018-06-11", "2018-06-12", "2018-06-13", "2018-06-14", "2018-06-15", "2018-06-16", "2018-06-17", "2018-06-18", "2018-06-19"]
+            }
+        ],
+        yAxis: [
+
+            {
+                axisTick: {show: false},
+                splitLine: {
+                    show: true,
+                    //  改变轴线颜色
+                    lineStyle: {
+                        // 使用深浅的间隔色
+                        color: ['#999'],
+                        type: "shadow",
+                    }
+                },
+//                max : 200,
+//                min : 0,
+                splitNumber: 4,
+                axisLine: {
+                    show: false,
+                    lineStyle: {
+                        color: '#999',
+                        type: "shadow",
+                        fontSize: 10
+                    }
+                },
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value}',
+                    textStyle: {
+                        fontSize: 8      //更改坐标轴文字大小
+                    }
+                }
+            }
+        ],
+        series: [
+            {
+                type: 'line',
+                clickable: false,
+                symbol: 'none',
+                color: "#0097FB",
+                data: [622.02, 260.1, 144.37, 82.63, 75.92, 159.33, 491.01, 976.69, 1494.82, 1859.92, 2215.17, 2379.43, 2679.43]
+            }
+        ]
+    };
+
+    ;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
+</script>
+<!--圆饼图-->
+<script>
+    //获取DOM
+    var myecharts = echarts.init(document.getElementById("pie"));
+
+    var option = ({
+        tooltip: {
+            show: false,
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        calculable: false,
+        series: [
+            {
+                name: '收入分类',
+                type: 'pie',//每个系列，通过type决定自己的系列型号
+                radius: ['50%', '25%'],
+                labelLine: {
+                    normal: {
+                        length: 60,
+                        length2: 70,
+                    }
+
+                },
+                label: {
+                    normal: {
+                        formatter: '{b|{b}}{a|{d}%}\n\n',
+                        borderWidth: 20,
+                        borderRadius: 4,
+                        padding: [0, -70],
+                        rich: {
+                            a: {
+                                fontSize: 12,
+                                lineHeight: 20
+                            },
+                            b: {
+                                fontSize: 12,
+                                lineHeight: 20,
+                            }
+                        }
+                    }
+                },
+                data: [
+                    {value: 30, name: '微信'},
+                    {value: 30, name: '支付宝'},
+                    {value: 10, name: '现金'},
+                    {value: 30, name: '会员余额'}
+                ],
+
+                itemStyle: {//图形样式 normal，emphasis
+                    emphasis: {
+                        shadowBlur: 200,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    },
+                    normal: {
+                        label: {
+                            show: true,
+                            formatter: '{b} : ({d}%)'
+                        },
+                        labelLine: {show: true}
+                    }
+                }
+            }
+        ],
+        color: ['rgb(24,144,255)', 'rgb(19,194,194)', 'rgb(47,194,91)', 'rgb(250,204,20)']
+    });
+    myecharts.setOption(option);
+</script>
+
+</body>
+
+</html>
